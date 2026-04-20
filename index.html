@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wedding Invitation | Alberto & Regine</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Great+Vibes&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Great+Vibes&family=Montserrat:wght@300;400;600&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         :root {
@@ -24,6 +24,7 @@
 
         .serif { font-family: 'Playfair Display', serif; }
         .script { font-family: 'Great Vibes', cursive; }
+        .poppins { font-family: 'Poppins', sans-serif; }
 
         .invitation-container {
             max-width: 800px;
@@ -79,7 +80,6 @@
             .hero-section { padding: 5rem 2rem; }
         }
 
-        /* Fixed Corner Logic: Adjusted to account for container padding/border */
         .top-left { top: 10px; left: 10px; border-top: 3px solid var(--gold); border-left: 3px solid var(--gold); }
         .top-right { top: 10px; right: 10px; border-top: 3px solid var(--gold); border-right: 3px solid var(--gold); }
         .bottom-left { bottom: 10px; left: 10px; border-bottom: 3px solid var(--gold); border-left: 3px solid var(--gold); }
@@ -103,18 +103,57 @@
             text-transform: uppercase;
             display: inline-block;
             transition: all 0.3s;
+            cursor: pointer;
             text-decoration: none;
             box-shadow: 0 4px 15px rgba(154, 175, 136, 0.3);
-        }
-
-        @media (min-width: 768px) {
-            .btn-rsvp { padding: 15px 40px; font-size: 0.9rem; }
+            border: none;
         }
 
         .btn-rsvp:hover {
             background-color: var(--deep-green);
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(154, 175, 136, 0.4);
+        }
+
+        #rsvpModal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.6);
+            backdrop-filter: blur(5px);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: #fdfbfb;
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+            border: 1px solid #f0e6d2;
+            position: relative;
+            animation: modalFadeIn 0.3s ease-out;
+        }
+
+        @keyframes modalFadeIn {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #888;
         }
 
         .role-title {
@@ -160,6 +199,39 @@
             display: inline-block;
             margin: 0 6px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .modal-input {
+            width: 100%;
+            padding: 14px;
+            margin: 8px 0;
+            border: 1.5px solid #edf2f7;
+            border-radius: 12px;
+            box-sizing: border-box;
+            font-size: 16px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .modal-button {
+            width: 100%;
+            background-color: #2d3748;
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: opacity 0.3s;
+        }
+
+        .plus-one-box {
+            background-color: #faf9f6;
+            padding: 15px;
+            border-radius: 12px;
+            margin-top: 15px;
+            border: 1px dashed #d6d1c4;
         }
     </style>
 </head>
@@ -313,7 +385,7 @@
             <h3 class="serif text-2xl md:text-3xl mb-3 md:mb-4">RSVP</h3>
             <p class="mb-6 md:mb-8 text-gray-600 text-xs md:text-sm italic">We would be honored to have you celebrate with us.</p>
             
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLScR0XcvDzG5m9Vq0f_BewX0wjFzAQFtIBr23Igf-TjwRZogkg/viewform" target="_blank" class="btn-rsvp">Confirm Attendance</a>
+            <button onclick="openRSVP()" class="btn-rsvp">Confirm Attendance</button>
             
             <p class="mt-4 md:mt-6 text-[9px] md:text-[10px] text-gray-400 uppercase tracking-widest mb-10">Kindly respond by June 11, 2026</p>
 
@@ -356,9 +428,158 @@
         </footer>
     </div>
 
+    <!-- RSVP MODAL -->
+    <div id="rsvpModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeRSVP()">&times;</span>
+            <div class="poppins">
+                <div class="text-[10px] md:text-[12px] uppercase tracking-[2px] text-[#8a7a5f] mb-1">YOU ARE INVITED TO THE WEDDING OF</div>
+                <div class="serif italic text-2xl md:text-3xl text-[#2d3748] mb-6">Alberto & Regine</div>
+
+                <!-- Step 1: Verification -->
+                <div id="loginSection">
+                    <p class="text-gray-500 text-sm mb-5">Please enter your full name to RSVP</p>
+                    <input type="text" id="guestName" class="modal-input" placeholder="Guest Full Name">
+                    <button onclick="verify()" id="verifyBtn" class="modal-button">Check My Invitation</button>
+                </div>
+
+                <!-- Step 2: Response -->
+                <div id="rsvpFormSection" class="hidden">
+                    <h2 class="text-xl font-semibold text-[#2d3748] mb-1">Hi, <span id="displayName" style="color: #8a7a5f;"></span>!</h2>
+                    <p class="text-gray-500 text-xs mb-6">Kindly respond by entering your details below.</p>
+                    
+                    <div class="text-left mb-4">
+                        <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wider ml-1">ATTENDANCE</label>
+                        <select id="attendance" class="modal-input">
+                            <option value="Attending">Joyfully Accepts</option>
+                            <option value="Declined">Regretfully Declines</option>
+                        </select>
+                    </div>
+
+                    <!-- PLUS ONE OPTION (Conditional based on res.allowedPlusOne === "Yes") -->
+                    <div id="plusOneContainer" class="plus-one-box text-left mb-6 hidden">
+                        <label class="text-[10px] font-bold text-[#8a7a5f] uppercase tracking-wider">BRINGING A GUEST?</label>
+                        <input type="text" id="plusOneName" class="modal-input" placeholder="Guest's Full Name">
+                        <p class="text-[9px] text-gray-400 mt-1 italic">* You are allowed to bring one extra guest.</p>
+                    </div>
+
+                    <button id="submitBtn" onclick="send()" class="modal-button">Submit RSVP</button>
+                </div>
+
+                <!-- Step 3: Success -->
+                <div id="successSection" class="hidden">
+                    <div style="font-size: 50px; margin-bottom: 15px;">🕊️</div>
+                    <h2 class="text-2xl font-bold text-[#2d3748]">Thank You!</h2>
+                    <p class="text-gray-500 text-sm mt-2">Your response has been lovingly received.</p>
+                    <button onclick="closeRSVP()" class="modal-button mt-4 bg-gray-200 !text-gray-700">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSXQC7oHBy30r6Ic3fAkbq9r5jqZ_ukR9IQBN2shsp4ygkUXw8Oe-mbiPsmTdMKv2zbrjMlM0V5rVpQ/pub?gid=1350567458&single=true&output=csv';
+        var guestRow = null;
+        var allowedPlusOne = false;
+
+        function openRSVP() {
+            document.getElementById('rsvpModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeRSVP() {
+            document.getElementById('rsvpModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+            document.getElementById('loginSection').classList.remove('hidden');
+            document.getElementById('rsvpFormSection').classList.add('hidden');
+            document.getElementById('successSection').classList.add('hidden');
+            document.getElementById('guestName').value = '';
+            document.getElementById('plusOneName').value = '';
+            document.getElementById('plusOneContainer').classList.add('hidden');
+            allowedPlusOne = false;
+        }
+
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('rsvpModal')) {
+                closeRSVP();
+            }
+        }
+
+        function verify() {
+            var name = document.getElementById('guestName').value.trim();
+            if(!name) { alert("Please enter your name."); return; }
+            var btn = document.getElementById('verifyBtn');
+            btn.disabled = true;
+            btn.innerText = "Checking...";
+
+            if (typeof google !== 'undefined' && google.script && google.script.run) {
+                google.script.run.withSuccessHandler(function(res) {
+                    btn.disabled = false; btn.innerText = "Check My Invitation";
+                    if (res.found) {
+                        document.getElementById('loginSection').classList.add('hidden');
+                        document.getElementById('rsvpFormSection').classList.remove('hidden');
+                        document.getElementById('displayName').innerText = name;
+                        guestRow = res.row;
+                        
+                        // LOGIC: Check 'Allowed Plus One?' column (D)
+                        if (res.allowedPlusOne === "Yes") {
+                            document.getElementById('plusOneContainer').classList.remove('hidden');
+                            allowedPlusOne = true;
+                        } else {
+                            document.getElementById('plusOneContainer').classList.add('hidden');
+                            allowedPlusOne = false;
+                        }
+                    } else {
+                        alert("We couldn't find your name in the guest list.");
+                    }
+                }).withFailureHandler(function(){
+                    btn.disabled = false; btn.innerText = "Check My Invitation";
+                    alert("System error.");
+                }).checkGuest(name);
+            } else {
+                // Mock logic for local testing
+                btn.disabled = false; btn.innerText = "Check My Invitation";
+                document.getElementById('loginSection').classList.add('hidden');
+                document.getElementById('rsvpFormSection').classList.remove('hidden');
+                document.getElementById('displayName').innerText = name;
+                
+                // MOCK BEHAVIOR: Criselva is 'No', Richard is 'Yes'
+                const lowerName = name.toLowerCase();
+                if(lowerName.includes("criselva")) {
+                    document.getElementById('plusOneContainer').classList.add('hidden');
+                    allowedPlusOne = false;
+                } else if(lowerName.includes("richard") || lowerName.includes("elva") || lowerName.includes("albert")) {
+                    document.getElementById('plusOneContainer').classList.remove('hidden');
+                    allowedPlusOne = true;
+                } else {
+                    document.getElementById('plusOneContainer').classList.add('hidden');
+                    allowedPlusOne = false;
+                }
+            }
+        }
+
+        function send() {
+            var status = document.getElementById('attendance').value;
+            var p1 = allowedPlusOne ? document.getElementById('plusOneName').value.trim() : "";
+            var btn = document.getElementById('submitBtn');
+            btn.disabled = true;
+            btn.innerText = "Saving...";
+
+            if (typeof google !== 'undefined' && google.script && google.script.run) {
+                google.script.run.withSuccessHandler(function() {
+                    document.getElementById('rsvpFormSection').classList.add('hidden');
+                    document.getElementById('successSection').classList.remove('hidden');
+                    setTimeout(refreshGuestList, 2000); 
+                }).submitRSVP(guestRow, status, p1);
+            } else {
+                setTimeout(function() {
+                    document.getElementById('rsvpFormSection').classList.add('hidden');
+                    document.getElementById('successSection').classList.remove('hidden');
+                }, 1000);
+            }
+        }
+
+        function refreshGuestList() {
+            const csvUrl = `https://docs.google.com/spreadsheets/d/e/2PACX-1vQvBM0NzT0yfpeJ5lffdMyhmQQ_ek-C-4urH1zjQHJQycM9_dl6Pv3z7EW52187WqzZNxSB-BFGN02D/pub?gid=0&single=true&output=csv`;
             
             const badgeContainer = document.getElementById('guest-badges');
             const statusMsg = document.getElementById('status-message');
@@ -369,7 +590,7 @@
                 .then(csvText => {
                     const rows = parseCSV(csvText);
                     if (rows && rows.length > 1) {
-                        renderConfirmed(rows);
+                        renderConfirmed(rows, badgeContainer, statusMsg, countBadge);
                     } else {
                         statusMsg.textContent = "No responses yet.";
                     }
@@ -377,49 +598,54 @@
                 .catch(err => {
                     statusMsg.textContent = "Sync error.";
                 });
+        }
 
-            function parseCSV(text) {
-                const lines = text.split(/\r?\n/).filter(l => l.trim() !== '');
-                return lines.map(line => {
-                    const res = []; let cur = ''; let q = false;
-                    for (let i = 0; i < line.length; i++) {
-                        if (line[i] === '"') q = !q;
-                        else if (line[i] === ',' && !q) { res.push(cur.trim()); cur = ''; }
-                        else cur += line[i];
-                    }
-                    res.push(cur.trim());
-                    return res.map(v => v.replace(/^"|"$/g, ''));
+        function parseCSV(text) {
+            const lines = text.split(/\r?\n/).filter(l => l.trim() !== '');
+            return lines.map(line => {
+                const res = []; let cur = ''; let q = false;
+                for (let i = 0; i < line.length; i++) {
+                    if (line[i] === '"') q = !q;
+                    else if (line[i] === ',' && !q) { res.push(cur.trim()); cur = ''; }
+                    else cur += line[i];
+                }
+                res.push(cur.trim());
+                return res.map(v => v.replace(/^"|"$/g, ''));
+            });
+        }
+
+        function renderConfirmed(rows, badgeContainer, statusMsg, countBadge) {
+            const confirmed = [];
+            for (let i = 1; i < rows.length; i++) {
+                const row = rows[i];
+                if (!row || row.length < 2) continue;
+                const guestName = row[0];
+                const status = (row[1] || "").toLowerCase();
+                const plusOne = (row[2] || "").trim();
+                if (status.includes('accept') || status === 'attending' || status.includes('joyfully')) {
+                    if (guestName) confirmed.push(guestName);
+                    if (plusOne && plusOne.toLowerCase() !== 'n/a' && plusOne !== '') confirmed.push(plusOne);
+                }
+            }
+            if (confirmed.length > 0) {
+                const sorted = [...new Set(confirmed)].sort();
+                statusMsg.style.display = 'none';
+                countBadge.textContent = `${sorted.length} ATTENDING`;
+                countBadge.classList.remove('hidden');
+                badgeContainer.innerHTML = '';
+                sorted.forEach(name => {
+                    const b = document.createElement('span');
+                    b.className = 'bg-white border border-gray-200 text-gray-700 px-3 py-1.5 rounded-md text-[10px] md:text-xs tracking-wider uppercase shadow-sm font-semibold';
+                    b.textContent = name;
+                    badgeContainer.appendChild(b);
                 });
+            } else {
+                statusMsg.textContent = "Waiting for confirmations...";
+                countBadge.classList.add('hidden');
             }
+        }
 
-            function renderConfirmed(rows) {
-                const confirmed = [];
-                for (let i = 1; i < rows.length; i++) {
-                    const row = rows[i];
-                    if (!row || row.length < 2) continue;
-                    const rsvp = (row[2] || "").toLowerCase();
-                    if (rsvp.includes('yes') || rsvp.includes('oo') || rsvp.includes('attend') || rsvp === 'y') {
-                        if (row[1]) confirmed.push(row[1]);
-                    }
-                }
-
-                if (confirmed.length > 0) {
-                    const sorted = [...new Set(confirmed)].sort();
-                    statusMsg.style.display = 'none';
-                    countBadge.textContent = `${sorted.length} ATTENDING`;
-                    countBadge.classList.remove('hidden');
-                    badgeContainer.innerHTML = '';
-                    sorted.forEach(name => {
-                        const b = document.createElement('span');
-                        b.className = 'bg-white border border-gray-200 text-gray-700 px-3 py-1.5 rounded-md text-[10px] md:text-xs tracking-wider uppercase shadow-sm font-semibold';
-                        b.textContent = name;
-                        badgeContainer.appendChild(b);
-                    });
-                } else {
-                    statusMsg.textContent = "Waiting for confirmations...";
-                }
-            }
-        });
+        document.addEventListener('DOMContentLoaded', refreshGuestList);
     </script>
 </body>
 </html>
