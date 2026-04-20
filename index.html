@@ -423,7 +423,10 @@
         }
 
         function refreshGuestList() {
-            const csvUrl = `https://docs.google.com/spreadsheets/d/e/2PACX-1vQvBM0NzT0yfpeJ5lffdMyhmQQ_ek-C-4urH1zjQHJQycM9_dl6Pv3z7EW52187WqzZNxSB-BFGN02D/pub?gid=0&single=true&output=csv`;
+            // Using your provided Google Sheet ID for guest list synchronization
+            const spreadsheetId = '1zRwBs-esPyKWdzLV9qgRVMPsAztpAW8ECDDkoDi1ZU8';
+            // Exporting specifically the "GuestList" sheet as CSV
+            const csvUrl = `https://docs.google.com/spreadsheets/d/${spreadsheetId}/gviz/tq?tqx=out:csv&sheet=GuestList`;
             
             const badgeContainer = document.getElementById('guest-badges');
             const statusMsg = document.getElementById('status-message');
@@ -460,6 +463,7 @@
 
         function renderConfirmed(rows, badgeContainer, statusMsg, countBadge) {
             const confirmed = [];
+            // Assumes Column A: Name, Column B: RSVP Status, Column C: Plus One Name
             for (let i = 1; i < rows.length; i++) {
                 const row = rows[i];
                 if (!row || row.length < 2) continue;
@@ -467,9 +471,11 @@
                 const status = (row[1] || "").toLowerCase();
                 const plusOne = (row[2] || "").trim();
                 
-                if (status.includes('accept') || status === 'attending' || status.includes('joyfully')) {
+                // Check if status implies attendance
+                if (status.includes('accept') || status.includes('attending') || status.includes('joyfully')) {
                     if (guestName) confirmed.push(guestName);
-                    if (plusOne && plusOne.toLowerCase() !== 'n/a' && plusOne !== '') {
+                    // Add plus one if name is provided and valid
+                    if (plusOne && plusOne.toLowerCase() !== 'n/a' && plusOne !== '' && plusOne.toLowerCase() !== 'none') {
                         confirmed.push(plusOne);
                     }
                 }
