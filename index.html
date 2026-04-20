@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wedding Invitation | Alberto & Regine</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Great+Vibes&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --primary-sage: #9aaf88;
+            --gold: #c5a059;
+            --deep-green: #2d4c3b;
+            --text-muted: #a0a0a0;
+        }
+
+        body {
+            background-color: #f9fbf9;
+            font-family: 'Montserrat', sans-serif;
+            color: #444;
+            margin: 0;
+            padding: 0;
+        }
+
+        .serif { font-family: 'Playfair Display', serif; }
+        .script { font-family: 'Great Vibes', cursive; }
+
+        .invitation-container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 12px solid var(--primary-sage);
+            position: relative;
+            overflow: hidden;
+        }
+
+        @media (min-width: 768px) {
+            .invitation-container {
+                margin: 40px auto;
+                border: 20px solid var(--primary-sage);
+            }
+        }
+
+        .hero-section {
+            position: relative;
+            background-image: url('https://i.imgur.com/ymV1JXk.jpeg'); 
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 3rem 1rem;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.45);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .corner-decoration {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        @media (min-width: 768px) {
+            .corner-decoration { width: 100px; height: 100px; }
+            .hero-section { padding: 5rem 2rem; }
+        }
+
+        /* Fixed Corner Logic: Adjusted to account for container padding/border */
+        .top-left { top: 10px; left: 10px; border-top: 3px solid var(--gold); border-left: 3px solid var(--gold); }
+        .top-right { top: 10px; right: 10px; border-top: 3px solid var(--gold); border-right: 3px solid var(--gold); }
+        .bottom-left { bottom: 10px; left: 10px; border-bottom: 3px solid var(--gold); border-left: 3px solid var(--gold); }
+        .bottom-right { bottom: 10px; right: 10px; border-bottom: 3px solid var(--gold); border-right: 3px solid var(--gold); }
+
+        .section-divider {
+            width: 60%;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--gold), transparent);
+            margin: 1.5rem auto;
+        }
+
+        .btn-rsvp {
+            background-color: var(--primary-sage);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            display: inline-block;
+            transition: all 0.3s;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(154, 175, 136, 0.3);
+        }
+
+        @media (min-width: 768px) {
+            .btn-rsvp { padding: 15px 40px; font-size: 0.9rem; }
+        }
+
+        .btn-rsvp:hover {
+            background-color: var(--deep-green);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(154, 175, 136, 0.4);
+        }
+
+        .role-title {
+            font-weight: bold;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--gold);
+            margin-bottom: 2px;
+            margin-top: 10px;
+        }
+
+        .name-text {
+            font-size: 0.8rem;
+            color: #333;
+            line-height: 1.4;
+        }
+
+        .entourage-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            text-align: center;
+        }
+
+        @media (min-width: 640px) {
+            .entourage-grid { grid-template-columns: 1fr 1fr; gap: 15px; }
+        }
+
+        .qr-container {
+            background: #fff;
+            border: 1px solid #eee;
+            padding: 25px;
+            border-radius: 12px;
+            display: inline-block;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="invitation-container">
+        <!-- Decoration Elements -->
+        <div class="corner-decoration top-left"></div>
+        <div class="corner-decoration top-right"></div>
+        <div class="corner-decoration bottom-left"></div>
+        <div class="corner-decoration bottom-right"></div>
+
+        <header class="hero-section text-center">
+            <div class="hero-overlay"></div>
+            <div class="hero-content py-4">
+                <p class="uppercase tracking-widest text-[10px] md:text-xs mb-4 text-gray-100">You are invited to the wedding of</p>
+                <h1 class="serif text-5xl md:text-8xl text-white mb-1 drop-shadow-lg">Alberto</h1>
+                <p class="script text-4xl md:text-5xl text-gray-200 my-1 md:my-2">and</p>
+                <h1 class="serif text-5xl md:text-8xl text-white mb-6 md:mb-8 drop-shadow-lg">Regine</h1>
+                <div class="section-divider"></div>
+                <p class="serif text-xl md:text-3xl font-bold uppercase tracking-widest text-white">Thursday, June 18, 2026</p>
+                <p class="text-sm md:text-xl uppercase text-gray-200 font-light mt-2">One Thirty O'clock in the afternoon</p>
+                <p class="text-[10px] md:text-sm mt-4 tracking-[0.2em] font-semibold text-white">MARAJAW EVENTS CENTER | SURIGAO CITY</p>
+            </div>
+        </header>
+
+        <!-- Entourage Section -->
+        <section class="text-center p-6 md:p-16 mb-8 md:mb-12">
+            <h2 class="script text-4xl md:text-5xl mb-6 md:mb-8">Entourage</h2>
+            <div class="entourage-grid mb-6 md:mb-8">
+                <div>
+                    <p class="role-title">Parents of the Groom</p>
+                    <p class="name-text">Jachin Ian E. Zamora</p>
+                    <p class="name-text">Zoraida E. Zamora</p>
+                </div>
+                <div>
+                    <p class="role-title">Parents of the Bride</p>
+                    <p class="name-text">Reynaldo Brua</p>
+                    <p class="name-text">Gelita Brua</p>
+                </div>
+            </div>
+
+            <h3 class="serif italic text-xl md:text-2xl mb-4" style="color: var(--gold);">Principal Sponsors</h3>
+            <div class="entourage-grid text-[10px] md:text-xs mb-8 md:mb-10">
+                <div class="space-y-1">
+                    <p>Elba Mesias</p><p>Melda Buchan</p><p>Julieta Toston</p><p>Alfonso Francisco</p><p>Nicetas Quiano</p>
+                    <p>Elizabeth Bonbon</p><p>Merlita Basilisco</p><p>Elva Pabrigal</p><p>Marites Mendoza</p>
+                    <p>Remedios Tinonga</p><p>Lito Echin</p><p>Conchita Villarin</p><p>Nelia Salvador</p>
+                    <p>Purita Salvador</p><p>Gloria Salvador</p>
+                </div>
+                <div class="space-y-1">
+                    <p>Mariolito Cayetuna Sr.</p><p>Lucena Guingguing</p><p>Ferdinand Toston</p><p>Ding Francisco</p>
+                    <p>Jimmy Quiano</p><p>Ramil Amatos</p><p>Winston Pitos</p><p>Crispin Pabrigal</p><p>Elvie Eupena</p>
+                    <p>Romulo Tinonga</p><p>Lucy Echin</p><p>Hipolito Villarin</p><p>Emmanual Salvador</p>
+                    <p>Generoso Salvador</p><p>Adamian Salvador</p>
+                </div>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <h3 class="serif italic text-xl md:text-2xl mb-4" style="color: var(--gold);">Secondary Sponsors</h3>
+            <div class="entourage-grid mb-6 md:mb-8">
+                <div>
+                    <p class="role-title">Best Man</p>
+                    <p class="name-text">Albert Joy E. Zamora</p>
+                </div>
+                <div>
+                    <p class="role-title">Maid of Honor</p>
+                    <p class="name-text">Gillean Brua</p>
+                </div>
+            </div>
+
+            <div class="entourage-grid mb-6 md:mb-8">
+                <div>
+                    <p class="role-title">Groomsmen</p>
+                    <p class="name-text">Cris James Pabrigal</p>
+                    <p class="name-text">Richard E. Pabrigal</p>
+                    <p class="name-text">Junjie Salvador</p>
+                    <p class="name-text">Edmar Jimenez</p>
+                </div>
+                <div>
+                    <p class="role-title">Bridesmaids</p>
+                    <p class="name-text">Trisha Mae Erino</p>
+                    <p class="name-text">Nicole Marie Mendoza</p>
+                    <p class="name-text">Shaira Brua</p>
+                    <p class="name-text">Juliet Trozo</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8 md:mb-10 border-t border-b border-gray-100 py-6">
+                <div>
+                    <p class="role-title">Ring Bearer</p>
+                    <p class="name-text">Cade K. Pabrigal</p>
+                </div>
+                <div>
+                    <p class="role-title">Coin Bearer</p>
+                    <p class="name-text">Matthew Zachary Petallo</p>
+                </div>
+                <div>
+                    <p class="role-title">Bible Bearer</p>
+                    <p class="name-text">Novel Rey Vicentino Jr.</p>
+                </div>
+            </div>
+
+            <div class="mb-8 md:mb-12">
+                <p class="role-title">Flower Girls</p>
+                <div class="grid grid-cols-1 gap-1">
+                    <p class="name-text">Elliana Zoey Zamora</p>
+                    <p class="name-text">Riley Ann Amarah Maesa</p>
+                    <p class="name-text">Kristina Claire Vicentino</p>
+                    <p class="name-text">Sheya Abigail Bonbon</p>
+                    <p class="name-text">Atarah Cassidy Salvador</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- RSVP Section -->
+        <section id="rsvp-section" class="text-center mb-12 md:mb-16 px-6">
+            <h3 class="serif text-2xl md:text-3xl mb-3 md:mb-4">RSVP</h3>
+            <p class="mb-6 md:mb-8 text-gray-600 text-xs md:text-sm italic">We would be honored to have you celebrate with us.</p>
+            
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLScR0XcvDzG5m9Vq0f_BewX0wjFzAQFtIBr23Igf-TjwRZogkg/viewform" target="_blank" class="btn-rsvp">Confirm Attendance</a>
+            
+            <p class="mt-4 md:mt-6 text-[9px] md:text-[10px] text-gray-400 uppercase tracking-widest mb-10">Kindly respond by June 11, 2026</p>
+
+            <div id="guest-list-container" class="mt-12 py-8 bg-gray-50 rounded-xl mx-2 md:mx-10 border border-gray-100">
+                <div class="flex flex-col items-center justify-center gap-2 mb-6">
+                    <h3 class="serif text-xl md:text-2xl text-gray-800">Confirmed Guest List</h3>
+                    <div id="status-message" class="text-[10px] uppercase tracking-tighter text-gray-400">Fetching attendee list...</div>
+                    <div id="guest-count-badge" class="hidden bg-sage-100 text-sage-800 px-3 py-0.5 rounded-full text-[10px] font-bold uppercase">0 Attending</div>
+                </div>
+                
+                <div id="guest-badges" class="flex flex-wrap justify-center gap-2 max-w-2xl mx-auto px-4">
+                    <!-- Dynamic Badges -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Wedding Gift Registry Section -->
+        <section class="text-center p-6 md:p-16 bg-white border-t border-gray-50">
+            <h2 class="script text-4xl md:text-5xl mb-4 mt-4">Wedding Gift</h2>
+            <p class="serif italic text-gray-600 text-sm mb-8 px-4">
+                Your presence at our wedding is the greatest gift of all.<br class="hidden md:block">
+                However, if you wish to honor us with a gift, we have provided a digital registry below.
+            </p>
+
+            <div class="mb-10">
+                <div class="qr-container">
+                    <img src="https://imgur.com/e5yAIf7.png" alt="Wedding Gift QR Code" class="w-48 h-48 md:w-64 md:h-64 object-contain mx-auto mb-4" onerror="this.src='https://via.placeholder.com/250?text=Scan+QR+for+Gift'">
+                    <p class="role-title">Scan to Gift</p>
+                </div>
+            </div>
+            
+            <div class="mt-4 mb-4">
+                <p class="script text-3xl text-sage-600">Thank you for your love and generosity</p>
+            </div>
+        </section>
+
+        <footer class="text-center mb-12 text-black-400 text-[13px] px-8">
+            <p class="uppercase tracking-widest leading-relaxed">Snap and share help us capture the love by using our hashtag</p>
+            <p class="mt-2 italic text-lg serif">#Alberta&RegineHappilyEverAfter</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSXQC7oHBy30r6Ic3fAkbq9r5jqZ_ukR9IQBN2shsp4ygkUXw8Oe-mbiPsmTdMKv2zbrjMlM0V5rVpQ/pub?gid=1350567458&single=true&output=csv';
+            
+            const badgeContainer = document.getElementById('guest-badges');
+            const statusMsg = document.getElementById('status-message');
+            const countBadge = document.getElementById('guest-count-badge');
+
+            fetch(csvUrl)
+                .then(response => response.text())
+                .then(csvText => {
+                    const rows = parseCSV(csvText);
+                    if (rows && rows.length > 1) {
+                        renderConfirmed(rows);
+                    } else {
+                        statusMsg.textContent = "No responses yet.";
+                    }
+                })
+                .catch(err => {
+                    statusMsg.textContent = "Sync error.";
+                });
+
+            function parseCSV(text) {
+                const lines = text.split(/\r?\n/).filter(l => l.trim() !== '');
+                return lines.map(line => {
+                    const res = []; let cur = ''; let q = false;
+                    for (let i = 0; i < line.length; i++) {
+                        if (line[i] === '"') q = !q;
+                        else if (line[i] === ',' && !q) { res.push(cur.trim()); cur = ''; }
+                        else cur += line[i];
+                    }
+                    res.push(cur.trim());
+                    return res.map(v => v.replace(/^"|"$/g, ''));
+                });
+            }
+
+            function renderConfirmed(rows) {
+                const confirmed = [];
+                for (let i = 1; i < rows.length; i++) {
+                    const row = rows[i];
+                    if (!row || row.length < 2) continue;
+                    const rsvp = (row[2] || "").toLowerCase();
+                    if (rsvp.includes('yes') || rsvp.includes('oo') || rsvp.includes('attend') || rsvp === 'y') {
+                        if (row[1]) confirmed.push(row[1]);
+                    }
+                }
+
+                if (confirmed.length > 0) {
+                    const sorted = [...new Set(confirmed)].sort();
+                    statusMsg.style.display = 'none';
+                    countBadge.textContent = `${sorted.length} ATTENDING`;
+                    countBadge.classList.remove('hidden');
+                    badgeContainer.innerHTML = '';
+                    sorted.forEach(name => {
+                        const b = document.createElement('span');
+                        b.className = 'bg-white border border-gray-200 text-gray-700 px-3 py-1.5 rounded-md text-[10px] md:text-xs tracking-wider uppercase shadow-sm font-semibold';
+                        b.textContent = name;
+                        badgeContainer.appendChild(b);
+                    });
+                } else {
+                    statusMsg.textContent = "Waiting for confirmations...";
+                }
+            }
+        });
+    </script>
+</body>
+</html>
